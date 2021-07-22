@@ -28,11 +28,13 @@ private:
     int n;
 public:
     void dfs(const string& s, int i) {
+        //边界条件 切到底了 那么这个答案合格了
         if(i == n) {
             ret.push_back(ans);
             return;
         }
         for(int j = i; j < n; ++j) {
+            //切出的子串符合回文特征，那么将它加入解数组，并递归（继续切）
             if(f[i][j]) {
                 ans.push_back(s.substr(i, j - i + 1));//位置, 长度
                 dfs(s, j + 1);
