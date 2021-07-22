@@ -8,7 +8,7 @@
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        return solve1_dp(nums);
+        return solve1_dp2(nums);
     }
     
     /**
@@ -30,6 +30,39 @@ public:
         }
 
         return *std::max_element(dp.begin(), dp.end());
+    }
+
+    /**
+     * DP + 二分查找
+     * Accepted
+     * 54/54 cases passed (4 ms)
+     * Your runtime beats 99.42 % of cpp submissions
+     * Your memory usage beats 57.88 % of cpp submissions (10.2 MB)
+     */
+    int solve1_dp2(vector<int>& nums) {
+        int n = nums.size();
+        if(n == 0) return 0;
+
+        vector<int > ans;
+        ans.push_back(nums[0]);
+        for(int i = 1; i < n; ++i) {
+            if(nums[i] > ans.back())
+                ans.push_back(nums[i]);
+            else{
+                int l = 0, r = ans.size() - 1;
+                while(l < r)
+                {
+                    int mid = (l + r) / 2;
+                    if(nums[i] > ans[mid])
+                        l = mid + 1;
+                    else
+                        r = mid;
+                }
+                ans[l] = nums[i];
+            }
+        }
+
+        return ans.size();
     }
 };
 // @lc code=end
