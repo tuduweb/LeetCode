@@ -88,7 +88,7 @@ public:
         }
 
         int rightAns = n;
-        l = 0, r = n - 1;
+        l = leftAns, r = n - 1;//优化查找位置
         while(l <= r) {
             m = (l + r) / 2;
             if(nums[m] > target) {
