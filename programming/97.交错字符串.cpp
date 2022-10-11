@@ -8,7 +8,7 @@
 class Solution {
 public:
     bool isInterleave(string s1, string s2, string s3) {
-        return solve1_offical(s1, s2, s3);
+        return solve1_re(s1, s2, s3);
     }
 
     /**
@@ -27,6 +27,46 @@ public:
         //如果绘map 那么不是由当前点的x,y取字符，而是下一步的?
     
         return false;
+    }
+
+    bool solve1_re(const string& s1, const string& s2, const string& s3) {
+        
+        int w = s1.size();
+        int h = s2.size();
+
+        if(w + h != s3.size()) return false;
+
+        vector<vector<bool > > dp(w + 1, vector<bool >(h + 1, false));
+
+        dp[0][0] = true;
+        for(int i = 1; i <= w; ++i)
+        {
+            if(s1[i - 1] == s3[i - 1])
+                dp[i][0] = true;
+            else
+                break;
+        }
+
+        for(int j = 1; j <= h; ++j)
+        {
+            if(s2[j - 1] == s3[j - 1])
+            {
+                dp[0][j] = true;
+            }
+            else
+                break;
+            }
+
+        for(int j = 1; j <= h; ++j)
+        {
+            for(int i = 1; i <= w; ++i)
+            {
+                dp[i][j] = (dp[i - 1][j] && s3[i + j - 1] == s1[i - 1])
+                            || (dp[i][j - 1] && s3[i + j - 1] == s2[j - 1]);
+            }
+        }
+    
+        return dp[w][h];
     }
 
 

@@ -8,14 +8,14 @@
 class Solution {
 public:
     vector<int> findSubstring(string s, vector<string>& words) {
-        return solve1(s, words);
+        return solve2(s, words);
     }
 
     /**
      * 自主
      * 做了好久 还是最后超时175 / 176
      */
-
+#if 0
     vector<int > ans;
     vector<int > status;
     int wordLength;
@@ -85,6 +85,40 @@ public:
                 status[i] = 0;
             }
         }
+    }
+#endif
+    /**
+     * 题解：哈希表
+     * 关键点：word长度相等
+     */
+    vector<int> solve2(const string& s, vector<string>& words) {
+        int wordLength = words[0].length();
+        int length = wordLength * words.size();
+        unordered_map<string, int> mp1;
+        unordered_map<string, int> mp2;
+        for(auto x : words) {
+            mp1[x]++;
+        }
+        
+        vector<int> res;
+        int n = s.size();
+        for(int j = 0; j < wordLength; ++j) {
+            mp2.clear();
+            if(length + j > n) break;
+            for(int i = j; i < j + length; i+= wordLength) {
+                mp2[s.substr(i, wordLength)]++;
+            }
+            if(mp1 == mp2) res.push_back(j);
+            for(int i = length + j; i + wordLength <= n; i+= wordLength) {
+                mp2[s.substr(i, wordLength)]++;
+                string del_s = s.substr(i - length, wordLength);
+                if(--mp2[del_s] == 0) {
+                    mp2.erase(del_s);
+                }
+                if(mp1 == mp2) res.push_back(i - length + wordLength);
+            }
+        }
+        return res;
     }
 };
 // @lc code=end

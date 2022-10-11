@@ -48,6 +48,8 @@ public:
 
     /**
      * 题解 单调栈!! [important]
+     * https://leetcode-cn.com/problems/trapping-rain-water/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by-w-8/
+     * 
      * 当前高度小于等于栈顶高度，入栈，指针后移。
      * 当前高度大于栈顶高度，出栈，
      * 计算出当前墙和栈顶的墙之间水的多少，

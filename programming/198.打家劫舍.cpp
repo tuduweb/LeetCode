@@ -29,10 +29,12 @@ public:
         dp[1] = std::max(nums[0], nums[1]);
 
         for(int i = 2; i < n; ++i) {
+            //选上一个当前就不能选, 没有选上一个那么可以选之前的
             dp[i] = std::max(dp[i - 1], dp[i - 2] + nums[i]);
         }
 
-        return std::max(dp[n - 2], dp[n - 1]);
+        //old//return std::max(dp[n - 2], dp[n - 1]);
+        return dp[n - 1];
     }
 
 };

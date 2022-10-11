@@ -8,7 +8,7 @@
 class Solution {
 public:
     int maximalRectangle(vector<vector<char>>& matrix) {
-        return solve1(matrix);
+        return solve2_offical(matrix);
     }
 
     /**
@@ -72,7 +72,13 @@ public:
 
         return ans;
     }
-    
+
+
+    int solve2_offical(vector<vector<char>>& matrix) {
+        /**
+         * 单调栈法
+         */
+    }
 };
 // @lc code=end
 
